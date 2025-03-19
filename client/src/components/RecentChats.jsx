@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { icons } from '../assets/assets';
-import { fetchRecentChats } from '../server/api';
-import { Link, useParams } from 'react-router-dom';
+import { fetchRecentChats, socket } from '../server/api';
+import { Link, Navigate } from 'react-router-dom';
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { useSelector } from 'react-redux';
 
@@ -10,6 +10,13 @@ const RecentChats = () => {
   const { user } = JSON.parse(localStorage.getItem("token"));
   const [recentChats,setRecentChats] = useState([]);
   const {paramId} = useSelector(store=>store.chatStore);
+
+  // handle recent chats 
+  // const handleRecentChats = async (recentUser)=>{
+    
+    
+  //   return navigate(`/chat/${recentUser._id}`)
+  // }
 
   const getRecentChats = async ()=>{
     if(!user){
@@ -24,22 +31,27 @@ const RecentChats = () => {
   }
 
   useEffect(()=>{
+    socket.emit("user-online", user._id);
     getRecentChats();
   },[paramId])
 
+  if(!user){
+    return <Navigate to={"/sign-in"} />
+  }
+
   return (
-    <div className='max-w-56 h-screen shadow-md '>
-        <img src={icons.logo} className='w-56 h-14 rounded-sm' alt="" />
+    <div className='sm:max-w-56 h-screen max-sm:w-[90vw] shadow-md '>
+        <img src={icons.logo} className='w-56 max-sm:w-full max-sm:h-20 h-14 rounded-sm' alt="" />
         <h2 className='text-xl font-bold py-3 px-2'>Recent Chat's</h2>
         {recentChats.length > 0 && <>
-        {recentChats.map((recent)=>{
-          console.log(recent)
+        {recentChats.map((recent,index)=>{
+
           return (
-            <Link className="flex border rounded-md border-gray-300 my-1 w-full py-1 items-center" to={`/chat/${recent._id}`}>
+            <Link to={`/chat/${recent._id}`} key={recent._id} className="flex border rounded-md border-gray-300 my-1 gap-2 w-full py-1 items-center">
               <span className="text-gray-400">
               <IoPersonCircleSharp size={38} />
               </span>
-              <div className='flex flex-col'>
+              <div className='flex flex-col items-start'>
                <span className='text-sm font-medium capitalize text-neutral-700'>{recent.name}</span>
                <span className='text-xs text-gray-500'>{recent.email}</span>
               </div>

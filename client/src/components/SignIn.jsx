@@ -49,14 +49,14 @@ const SignIn = () => {
           setEmail("");
           setName("")
           setOtp(new Array(4).fill(""));
-          return navigate("/")
+          return navigate("/chat")
         } catch (error) {
           toast.error(error?.response?.data?.message || "Otp verification failed")
           console.log(error.response.data.message)
         }
     };
     if(token){
-      return <Navigate to={"/"} />
+      return <Navigate to={"/chat"} />
     }
   return (
     <div className='bg-gray-200 h-screen w-screen flex items-center justify-center'>

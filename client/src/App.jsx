@@ -13,6 +13,7 @@ const App = () => {
         <Route path='/sign-in' element={<SignIn />} />
         <Route path='/chat/:id' element={<ChatPage />} />
         <Route path='/new-chat' element={<AddChat />} />
+        <Route path='/chat' element={<Home />} />
         <Route path='*' element={<Home />} />
       </Routes>
       <ToastContainer />

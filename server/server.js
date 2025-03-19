@@ -34,12 +34,12 @@ app.use((req,res)=>{
 const onlineUsers = new Map(); // Store online users
 
 io.on("connection", (socket) => {
-    console.log("New user connected:", socket.id);
+    // console.log("New user connected:", socket.id);
     
     // Handle user online status
     socket.on("user-online", async (userId) => {
         onlineUsers.set(userId, socket.id);
-        console.log(`User ${userId} is online`);
+        // console.log(`User ${userId} is online`);
         io.emit("update-user-status", Array.from(onlineUsers.keys()));
     });
 
@@ -79,7 +79,7 @@ io.on("connection", (socket) => {
             }
         });
         io.emit('update-user-status', Array.from(onlineUsers.keys()));
-        console.log('User disconnected:', socket.id);
+        // console.log('User disconnected:', socket.id);
     });
 });
 

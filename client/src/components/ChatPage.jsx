@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import Sidebar from "./Sidebar";
 import RecentChats from "./RecentChats";
 import { IoPersonCircleSharp } from "react-icons/io5";
-import { IoMdSend } from "react-icons/io";
-import { useParams } from "react-router-dom";
+import { IoMdSend, IoMdArrowBack } from "react-icons/io";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { fetchChatDetails, socket } from "../server/api";
 import { icons } from "../assets/assets";
 import {format} from "date-fns";
@@ -18,6 +18,7 @@ const ChatPage = () => {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [message, setMessage] = useState("");
   const { user } = JSON.parse(localStorage.getItem("token"));
+
   const chatContainerRef = useRef(null);
   const lastSeenMessageIndex = messages
   .map((msg, index) => (msg.senderId === user._id && msg.seen ? index : null))
@@ -66,7 +67,7 @@ const ChatPage = () => {
 
   // Manage Socket Events
   useEffect(() => {
-    socket.emit("user-online", user._id);
+    // socket.emit("user-online", user._id);
 
     // param id global state
     dispatch(setParamId(id))
@@ -116,22 +117,31 @@ const ChatPage = () => {
     };
   }, [id]); // Run when receiver ID changes
 
+  if(!user){
+    return <Navigate to="/sign-in" />
+  }
+
   return (
     <section className="flex h-screen w-screen">
       <Sidebar />
-      <RecentChats />
+      <div className="max-sm:hidden sm:block">
+        <RecentChats />
+      </div>
       {/* Chat screen */}
       {id ? (
         <div className="w-[90%] h-screen">
           {/* Top Header */}
           <header className="flex items-center gap-2 shadow-md p-2 bg-blue-200">
+            <Link to={"/chat"} className="text-gray-600 sm:hidden">
+              <IoMdArrowBack size={24} />
+            </Link>
             <span className="text-gray-400">
               <IoPersonCircleSharp size={38} />
             </span>
             {reciever && (
               <div>
                 <h2 className="capitalize">{reciever}</h2>
-                <p>{onlineUsers.includes(id) ? "🟢 Online" : "⚪ Offline"}</p>
+                <p className="text-xs">{onlineUsers.includes(id) ? "🟢 Online" : "⚪ Offline"}</p>
               </div>
             )}
           </header>

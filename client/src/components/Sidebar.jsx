@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { use, useEffect } from 'react'
 import { IoMdChatbubbles, IoIosAdd } from "react-icons/io";
 import { CiLogout } from "react-icons/ci";
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -14,8 +14,7 @@ const Sidebar = () => {
 
     const handleLogout = async ()=>{
         try {
-            const logoutRes = await logout();
-            console.log(logoutRes)
+            await logout();
             toast.success("Logout successfully")
             localStorage.removeItem("token")
             return navigate("/sign-in")
@@ -28,6 +27,7 @@ const Sidebar = () => {
     useEffect(()=>{
         dispatch(fetchProfile());
     },[])
+
 
   return (
     <section className='max-w-10 h-screen bg-[#43fff2] flex flex-col justify-between items-center py-8'>

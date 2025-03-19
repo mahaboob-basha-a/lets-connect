@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 import { searchUserByEmail } from "../server/api";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 const AddChat = ({ onSelectUser }) => {
     const [email, setEmail] = useState("");
     const [searchResult, setSearchResult] = useState(null);
+    const token = localStorage.getItem("token")
 
     const handleSearch = async () => {
         setSearchResult(null);
@@ -23,7 +24,11 @@ const AddChat = ({ onSelectUser }) => {
         } catch (error) {
             return toast.error("User not found");
         };
-        }
+    }
+
+    if(!token){
+        return <Navigate to={"/sign-in"} />
+    }
 
     return (
         <section className="flex bg-neutral-200">
