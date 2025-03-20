@@ -21,14 +21,14 @@ export const sendOtpController = async (req, res) => {
     // Generate OTP
     const otp = Math.floor(1000 + Math.random() * 9000); // 4-digit OTP
     console.log('otp',otp);
-    user.name = email[0]
+    user.name = user.name || email[0]
     user.otp = otp;
     user.otpExpires = new Date(Date.now() + 5 * 60 * 1000); // Expires in 5 min
 
     await user.save();
     await sendOtpEmail(email, otp);
 
-    res.json({ message: "OTP sent successfully" });
+    res.json({ message: "OTP sent successfully",name:user.name });
 };
 
 // Verify OTP - Authenticate user and set cookie
@@ -50,7 +50,7 @@ export const verifyOtpController = async (req, res) => {
     // Generate JWT Token
     const token = jwt.sign({ userId: user._id, email: user.email, name: user.name }, process.env.JWT_SECRET, { expiresIn: "7d" });
     // Set cookie with token
-    res.cookie("token", token, {httpOnly: true,secure: process.env.DEV_ENV === 'production',sameSite:'lax' }).json({ message: "Login successful", user, token });
+    res.cookie("token", token, {httpOnly: true,secure: process.env.DEV_ENV === 'production',sameSite: process.env.DEV_ENV === 'production'? 'none' :'lax',maxAge: 7 * 24 * 60 * 60 * 1000 }).json({ message: "Login successful", user, token });
 };
 
 // Logout - Clears the cookie

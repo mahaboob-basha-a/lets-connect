@@ -14,7 +14,7 @@ const App = () => {
         <Route path='/chat/:id' element={<ChatPage />} />
         <Route path='/new-chat' element={<AddChat />} />
         <Route path='/chat' element={<Home />} />
-        <Route path='*' element={<Home />} />
+        <Route path='*' element={<SignIn />} />
       </Routes>
       <ToastContainer />
     </div>

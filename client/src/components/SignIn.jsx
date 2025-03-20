@@ -24,6 +24,7 @@ const SignIn = () => {
       try {
         const otpRes = await sendOtp(email)
         toast.success(otpRes?.data?.message)
+        setName(otpRes?.data?.name || "")
         setState(true)
       } catch (error) {
         setState(false)
