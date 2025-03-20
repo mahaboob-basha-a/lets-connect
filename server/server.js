@@ -27,7 +27,7 @@ app.use("/auth", authRoutes);
 app.use("/chat", chatRouter);
 
 // Default route
-app.use((req,res)=>{
+app.use((_,res)=>{
     res.json({message:"server running..."})
 })
 

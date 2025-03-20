@@ -77,13 +77,15 @@ const ChatPage = () => {
 
     // Listen for new messages
     const handleNewMessage = (newMessage) => {
-      setMessages((prev) => {
-        // Prevent duplicate messages
-        if (!prev.some((msg) => msg._id === newMessage._id)) {
-          return [...prev, newMessage];
-        }
-        return prev;
-      });
+      if (newMessage.receiverId === user._id || newMessage.senderId === user._id) {
+        // Only update messages if the user is involved
+        setMessages((prev) => {
+          if (!prev.some((msg) => msg._id === newMessage._id)) {
+            return [...prev, newMessage];
+          }
+          return prev;
+        });
+      }
     };
 
     socket.on("message", handleNewMessage);
