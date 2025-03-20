@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getProfile, logout } from "../server/api";
+import { getProfile } from "../server/api";
 
 export const fetchProfile = createAsyncThunk("getProfile", async () => {
     const profile = await getProfile();

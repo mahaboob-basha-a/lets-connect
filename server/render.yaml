@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: websocket-backend
+    runtime: node
+    region: oregon  # Change to your preferred region
+    plan: free  # Can be "starter", "standard", etc.
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000  # Match this with your server
+    buildCommand: npm install
+    startCommand: node server.js
+    autoDeploy: true
+    healthCheckPath: /
+    env: node
