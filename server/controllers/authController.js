@@ -20,7 +20,7 @@ export const sendOtpController = async (req, res) => {
 
     // Generate OTP
     const otp = Math.floor(1000 + Math.random() * 9000); // 4-digit OTP
-    console.log('otp',otp);
+
     user.name = user.name || email[0]
     user.otp = otp;
     user.otpExpires = new Date(Date.now() + 5 * 60 * 1000); // Expires in 5 min
