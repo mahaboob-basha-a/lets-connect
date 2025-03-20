@@ -20,15 +20,6 @@ const globalReducer = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchProfile.fulfilled, (state, action) => {
                 state.user = action.payload.user; // Store actual socket instance
-            }).addCase(fetchProfile.rejected,async ()=>{
-                try {
-                    await logout();
-                    localStorage.removeItem("token");
-                    window.location("/sign-in"); 
-                } catch (error) {
-                    localStorage.removeItem("token");
-                    window.location("/sign-in"); 
-                }
             })
     }
 });
