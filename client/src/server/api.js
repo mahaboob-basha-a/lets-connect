@@ -1,7 +1,7 @@
 import io from 'socket.io-client';
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_SERVER_URI; // Change this to your backend URL
+const API_URL = import.meta.env.VITE_SERVER_URI;
 
 // Axios instance
 const api = axios.create({
@@ -12,7 +12,10 @@ const api = axios.create({
     }
 });
 
-export const socket = io(import.meta.env.VITE_SERVER_URI,{withCredentials:true});
+export const socket = io(import.meta.env.VITE_SERVER_URI,{
+    transports: ["websocket"],
+    withCredentials: true
+});
 
 export const connectUser = (userId) => {
     socket.emit("userOnline", userId);
