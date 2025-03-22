@@ -37,7 +37,7 @@ export const getRecentChats = async (req, res) => {
          // Find unique user IDs the logged-in user has chatted with
          const recentMessages = await Message.find({
             $or: [{ senderId: userId }, { receiverId: userId }]
-        }).sort({ createdAt: -1 });
+        });
 
         const uniqueUserIds = new Set();
 
@@ -56,7 +56,7 @@ export const getRecentChats = async (req, res) => {
             { _id: 1, email: 1, name: 1 } // Only return ID and email
         );
 
-        return res.status(200).json(recentChats);
+        return res.status(200).json(recentChats.reverse());
     } catch (error) {
         console.error("Error fetching recent chats:", error);
         return res.status(500).json({ error: "Internal Server Error" });
