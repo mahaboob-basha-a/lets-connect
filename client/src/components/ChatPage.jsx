@@ -26,13 +26,19 @@ const ChatPage = () => {
   .filter((index) => index !== null)
   .pop();
   const [keyboardOpen, setKeyboardOpen] = useState(false);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
 
 useEffect(() => {
+  const originalHeight = window.innerHeight
+
   const handleResize = () => {
-    if (window.innerHeight < screen.height * 0.8) {
+    const newHeight = window.innerHeight
+    if (newHeight < originalHeight) {
+      setKeyboardHeight(originalHeight - newHeight);
       setKeyboardOpen(true);
     } else {
       setKeyboardOpen(false);
+      setKeyboardHeight(0);
     }
   };
 
@@ -178,10 +184,10 @@ useEffect(() => {
           </header>
 
           {/* Chat Messages */}
-          <div className={`flex flex-col ${keyboardOpen ? "h-[calc(100vh-40vh)]" : "h-[calc(100vh-56px)]"}`}>
+          <div className={`flex relative flex-col ${keyboardOpen ? "h-[calc(100vh-40vh)]" : "h-[100vh]"}`}>
             <div
               ref={chatContainerRef}
-              className={`bg-cover bg-center px-3 pb-2 pt-8 w-full chat-container transition-all duration-300`}
+              className={`bg-cover bg-center px-3 pt-2 sm:pb-14 pb-1 w-full chat-container transition-all duration-300`}
               style={{ backgroundImage: `url(${icons.chatBg})` }}
             >
               {messages.map((msg,index) => {
@@ -208,7 +214,7 @@ useEffect(() => {
               {typing && <TypingIndicator />}
             </div>
             {/* Message Input */}
-            <div className="flex items-center border-2 border-gray-400 rounded-b-sm bg-white fixed bottom-0 w-full">
+            <div className={`flex items-center border-2 border-gray-400 rounded-b-sm bg-white sm:absolute transition-all duration-300 w-full ${keyboardHeight > 0 ? `bottom-[${keyboardHeight}px]` : "bottom-0"}`} style={{ bottom: keyboardHeight > 0 ? `${keyboardHeight}px` : "0px" }} >
               <input
                 type="text"
                 value={message}
