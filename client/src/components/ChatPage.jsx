@@ -20,7 +20,6 @@ const ChatPage = () => {
   const [message, setMessage] = useState("");
   const [typing,setTyping] = useState(false)
   const { user } = JSON.parse(localStorage.getItem("token"));
-
   const chatContainerRef = useRef(null);
   const lastSeenMessageIndex = messages
   .map((msg, index) => (msg.senderId === user._id && msg.seen ? index : null))
@@ -147,7 +146,7 @@ const ChatPage = () => {
       </div>
       {/* Chat screen */}
       {id ? (
-        <div className="w-[90%] h-screen">
+        <div className="w-full sm:w-[90%] h-screen">
           {/* Top Header */}
           <header className="flex items-center gap-2 shadow-md p-2 bg-blue-200">
             <Link to={"/chat"} className="text-gray-600 sm:hidden">
@@ -169,7 +168,7 @@ const ChatPage = () => {
           <div className="flex flex-col">
             <div
               ref={chatContainerRef}
-              className="bg-cover bg-center p-4 h-[84vh] w-full chat-container"
+              className="bg-cover bg-center bg-fixed p-4 h-[84vh] w-full chat-container"
               style={{ backgroundImage: `url(${icons.chatBg})` }}
             >
               {messages.map((msg,index) => {
@@ -196,7 +195,7 @@ const ChatPage = () => {
               {typing && <TypingIndicator />}
             </div>
             {/* Message Input */}
-            <div className="flex items-center border-2 border-gray-400 rounded-b-sm">
+            <div className="flex items-center border-2 border-gray-400 rounded-b-sm bg-white message-input">
               <input
                 type="text"
                 value={message}
@@ -204,11 +203,11 @@ const ChatPage = () => {
                 onKeyDown={e=>e.key === 'Enter'? handleSendMessage() : null}
                 placeholder="Type message here..."
                 onBlur={handleBlur}
-                className="outline-none w-[97%] py-2 px-1 h-full"
+                className="outline-none md:w-[96%] w-[88%] py-3 px-2 touch-manipulation"
               />
               <button
                 onClick={handleSendMessage}
-                className={`cursor-pointer ${
+                className={`cursor-pointer rounded-full h-6 w-6 touch-manipulation ${
                   message.length > 0 ? "-rotate-45" : "rotate-0"
                 }`}
               >

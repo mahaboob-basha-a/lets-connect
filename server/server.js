@@ -9,7 +9,7 @@ import { app,server } from './sockets/socket.js';
 app.use(cors({ origin: process.env.CLIENT_URI, credentials:true }));
 app.use(cookieParser());
 
-app.use("/auth", authRoutes);
+app.use("/auth", authRoutes); 
 app.use("/chat", chatRouter);
 
 // Default route

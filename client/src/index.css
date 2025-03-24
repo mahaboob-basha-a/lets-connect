@@ -3,7 +3,23 @@
 
 *{
   font-family: 'Outfit';
+  scroll-behavior: smooth;
 }
+
+input, button {
+  min-height: 48px;
+  touch-action: manipulation; 
+  -webkit-tap-highlight-color: transparent; 
+}
+
+.message-input {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  background: white;
+}
+
+
 .active{
   border-radius: 50%;
   background-color: #fff;
@@ -14,6 +30,8 @@
   align-items: center;
 }
 .chat-container {
+  background-attachment: fixed;
+  background-size: cover;
   overflow-y: auto;
   scrollbar-width: none; 
   -ms-overflow-style: none; 
@@ -21,4 +39,8 @@
 
 .chat-container::-webkit-scrollbar {
   display: none;
+}
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
