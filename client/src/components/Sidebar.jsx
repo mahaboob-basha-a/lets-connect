@@ -32,16 +32,16 @@ const Sidebar = () => {
   return (
     <section className='max-w-10 h-screen bg-[#43fff2] flex flex-col justify-between items-center py-8'>
         {/* <img src={icons.logo} className='w-16' alt="" /> */}
-        <div className='flex flex-col items-center gap-6'>
+        <div title='Profile' className='flex flex-col items-center gap-6'>
             {user && <span className='capitalize h-8 w-8 flex items-center justify-center text-xl font-semibold text-center rounded-full bg-white'>{user.name[0]}</span>}
-        <NavLink to={'/chat'} >
+        <NavLink title="Recent Chat's" to={'/chat'} >
             <IoMdChatbubbles size={28} />
         </NavLink>
-        <NavLink to={'/new-chat'}>
+        <NavLink title='New Chat' to={'/new-chat'}>
             <IoIosAdd size={40} />
         </NavLink>
         </div>
-        <button onClick={handleLogout}>
+        <button title='Logout' onClick={handleLogout}>
             <CiLogout size={24} />
         </button>
     </section>

@@ -46,6 +46,19 @@ io.on("connection", (socket) => {
             io.to(onlineUsers.get(receiverId)).emit('message', newMessage);
         }
     });
+    // typing on
+    socket.on('typing-on',({ senderId,receiverId,typing })=>{
+        if (onlineUsers.has(senderId)) {
+            io.to(onlineUsers.get(senderId)).emit('typing-status', { senderId, receiverId,typing });
+        }
+    })
+    // typing stop
+    socket.on('typing-stop',({ senderId,receiverId,typing })=>{
+        if (onlineUsers.has(senderId)) {
+            io.to(onlineUsers.get(senderId)).emit('typing-status', { senderId, receiverId,typing });
+        }
+    })
+    
 
     // Mark messages as seen
     socket.on('mark-seen', async ({ senderId, receiverId }) => {
