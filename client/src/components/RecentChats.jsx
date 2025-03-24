@@ -4,6 +4,7 @@ import { fetchRecentChats, socket } from '../server/api';
 import { Link, Navigate } from 'react-router-dom';
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { useSelector } from 'react-redux';
+import Sidebar from './Sidebar';
 
 
 const RecentChats = () => {
@@ -33,6 +34,8 @@ const RecentChats = () => {
   }
 
   return (
+    <section className='flex'>
+      <Sidebar/>
     <div className='sm:max-w-56 h-screen max-sm:w-[90vw] shadow-md '>
         <img src={icons.logo} className='w-56 max-sm:w-full max-sm:h-20 h-14 rounded-sm' alt="" />
         <h2 className='text-xl font-bold py-3 px-2'>Recent Chat's</h2>
@@ -54,6 +57,7 @@ const RecentChats = () => {
         })}
         </>}
     </div>
+</section>
   )
 }
 

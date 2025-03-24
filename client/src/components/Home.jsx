@@ -13,7 +13,6 @@ const Home = () => {
 
   return (
     <div className='flex'>
-      <Sidebar />
       <RecentChats />
       <div className='flex flex-col max-sm:hidden justify-center items-center w-[90%] bg-neutral-200'>
         <img src={icons.logo} className='w-40 rounded-md' alt="" />
