@@ -148,7 +148,7 @@ const ChatPage = () => {
       {id ? (
         <div className="w-full sm:w-[90%] h-screen">
           {/* Top Header */}
-          <header className="flex items-center gap-2 fixed top-0 shadow-md p-2 bg-blue-200">
+          <header className="flex items-center gap-2 fixed top-0 shadow-md p-2 bg-blue-200 w-full z-10">
             <Link to={"/chat"} className="text-gray-600 sm:hidden">
               <IoMdArrowBack size={24} />
             </Link>
@@ -168,7 +168,7 @@ const ChatPage = () => {
           <div className="flex flex-col">
             <div
               ref={chatContainerRef}
-              className="bg-cover bg-center bg-fixed p-4 h-[84vh] w-full chat-container"
+              className="bg-cover bg-center bg-fixed p-4 h-[calc(100vh-56px)] w-full chat-container"
               style={{ backgroundImage: `url(${icons.chatBg})` }}
             >
               {messages.map((msg,index) => {
