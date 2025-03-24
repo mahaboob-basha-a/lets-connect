@@ -11,13 +11,6 @@ const RecentChats = () => {
   const [recentChats,setRecentChats] = useState([]);
   const {paramId} = useSelector(store=>store.chatStore);
 
-  // handle recent chats 
-  // const handleRecentChats = async (recentUser)=>{
-    
-    
-  //   return navigate(`/chat/${recentUser._id}`)
-  // }
-
   const getRecentChats = async ()=>{
     if(!user){
       return null;
