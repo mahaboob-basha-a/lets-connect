@@ -59,6 +59,8 @@ const ChatPage = () => {
   
     // Emit the message to the server
     socket.emit('send-message', newMessage);
+
+    // socket.emit('mark-seen', { senderId: id, receiverId: user._id });
   
     // Clear the input field
     setMessage('');
@@ -67,17 +69,24 @@ const ChatPage = () => {
 
   // Manage Socket Events
   useEffect(() => {
-    // socket.emit("user-online", user._id);
-
+    socket.emit("user-online", user._id);
+    socket.emit('mark-seen', { senderId: id, receiverId: user._id });
+    
     // param id global state
     dispatch(setParamId(id))
-
+    
     // Fetch chat history only when the receiver ID changes
     getChatDetails();
-
+    
     // Listen for new messages
     const handleNewMessage = (newMessage) => {
-      if (newMessage.receiverId === user._id || newMessage.senderId === user._id) {
+      socket.emit('mark-seen', { senderId: id, receiverId: user._id });
+
+      console.log(newMessage.receiverId)
+      console.log(newMessage.senderId)
+      console.log(user._id)
+
+      if ((newMessage.senderId === id && newMessage.receiverId === user._id) || (newMessage.senderId === user._id && newMessage.receiverId === id)) {
         // Only update messages if the user is involved
         setMessages((prev) => {
           if (!prev.some((msg) => msg._id === newMessage._id)) {
@@ -89,21 +98,15 @@ const ChatPage = () => {
     };
 
     socket.on("message", handleNewMessage);
-    socket.emit('mark-seen', { senderId: id, receiverId: user._id });
-
 
     // Listen for user status updates
     socket.on("update-user-status", (users) => setOnlineUsers(users));
 
-    // Listen for seen messages
-    
-    socket.emit('mark-seen', { senderId: id, receiverId: user._id });
-    
     const handleSeenMessages = ({ senderId, receiverId }) => {
       setMessages((prevMessages) =>
         prevMessages.map((msg) =>
             msg.senderId === senderId && msg.receiverId === receiverId
-                ? { ...msg, seen: true } // Update seen status in UI
+                ? { ...msg, seen: true } 
                 : msg
         )
     );
@@ -122,7 +125,7 @@ const ChatPage = () => {
   if(!user){
     return <Navigate to="/sign-in" />
   }
-
+console.log(messages)
   return (
     <section className="flex h-screen w-screen">
       <Sidebar />
@@ -179,14 +182,14 @@ const ChatPage = () => {
             </div>
 
             {/* Message Input */}
-            <div className="flex items-center border-2 py-2 border-gray-400 rounded-b-sm">
+            <div className="flex items-center border-2 border-gray-400 rounded-b-sm">
               <input
                 type="text"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 onKeyDown={e=>e.key === 'Enter'? handleSendMessage() : null}
                 placeholder="Type message here..."
-                className="outline-none w-[97%] p-1 h-full"
+                className="outline-none w-[97%] py-2 px-1 h-full"
               />
               <button
                 onClick={handleSendMessage}
