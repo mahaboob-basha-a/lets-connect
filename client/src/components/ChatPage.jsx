@@ -148,7 +148,7 @@ const ChatPage = () => {
       {id ? (
         <div className="w-full sm:w-[90%] h-screen">
           {/* Top Header */}
-          <header className="flex items-center gap-2 sticky top-0 left-0 shadow-md p-2 bg-blue-200 w-full z-10">
+          <header className="flex items-center gap-2 fixed top-0 left-0 shadow-md p-2 bg-blue-200 w-full z-10">
             <Link to={"/chat"} className="text-gray-600 sm:hidden">
               <IoMdArrowBack size={24} />
             </Link>
@@ -195,7 +195,7 @@ const ChatPage = () => {
               {typing && <TypingIndicator />}
             </div>
             {/* Message Input */}
-            <div className="flex items-center border-2 border-gray-400 rounded-b-sm bg-white message-input">
+            <div className="flex items-center border-2 border-gray-400 rounded-b-sm bg-white fixed bottom-0 w-full">
               <input
                 type="text"
                 value={message}
