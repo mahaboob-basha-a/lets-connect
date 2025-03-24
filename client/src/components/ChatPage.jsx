@@ -148,7 +148,7 @@ const ChatPage = () => {
       {id ? (
         <div className="w-full sm:w-[90%] h-screen">
           {/* Top Header */}
-          <header className="flex items-center gap-2 fixed top-0 left-0 shadow-md p-2 bg-blue-200 w-full z-10">
+          <header className="flex items-center gap-2 sticky top-0 left-0 shadow-md p-2 bg-blue-200 w-full z-10">
             <Link to={"/chat"} className="text-gray-600 sm:hidden">
               <IoMdArrowBack size={24} />
             </Link>
