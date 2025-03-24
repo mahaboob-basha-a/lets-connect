@@ -178,12 +178,10 @@ useEffect(() => {
           </header>
 
           {/* Chat Messages */}
-          <div className="flex flex-col">
+          <div className={`flex flex-col ${keyboardOpen ? "h-[calc(100vh-40vh)]" : "h-[calc(100vh-56px)]"}`}>
             <div
               ref={chatContainerRef}
-              className={`bg-cover bg-center px-3 pb-2 pt-8 w-full chat-container transition-all duration-300 ${
-                keyboardOpen ? "h-[calc(100vh-40vh)]" : "h-[calc(100vh-56px)]"
-              }`}
+              className={`bg-cover bg-center px-3 pb-2 pt-8 w-full chat-container transition-all duration-300`}
               style={{ backgroundImage: `url(${icons.chatBg})` }}
             >
               {messages.map((msg,index) => {
